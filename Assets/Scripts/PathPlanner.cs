@@ -22,7 +22,7 @@ namespace Trajectory_Planner_Augmentus
             // We only have RRT planner, it can be extended to other types of planners
             if (type == PlannerType.RRT)
             {
-                // m_plannerAdapter = new RRTAdapter(m_availabilityChecker.IsAvailable);
+                m_plannerAdapter = new RRTAdapter(m_availabilityChecker.IsAvailable);
             }
             else
             {
@@ -39,14 +39,17 @@ namespace Trajectory_Planner_Augmentus
         public void Process() 
         {
             // Run the planner algorithm, e.g., RRT
-            // m_path = m_plannerAdapter.Plan(m_start.convertToArray(), m_end.convertToArray());
-            m_path.points = new List<Point>{m_start, m_end}; 
+            // m_path.points = new List<Point>{m_start, m_end}; 
+            var outputPath = m_plannerAdapter.Plan(m_start.convertToArray(), m_end.convertToArray());
+            m_path = new Path(outputPath);
         }
 
         public Path GetResult()
         {
             return m_path;
         }
+
+        
 
     }
 
