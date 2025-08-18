@@ -2,11 +2,11 @@
 
 namespace Trajectory_Planner_Augmentus
 {
-    public class TrajectoryParameterizer
+    public class TrajectoryOptimizer
     {
-        private Path m_path = new Path();
-        private Trajectory m_trajectory = new Trajectory();
-        public float m_sample_interval = new float();
+        private Path m_path;
+        private Trajectory m_trajectory;
+        public float m_sample_interval;
 
         public void SetSampleInterval(float sample_interval)
         {

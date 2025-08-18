@@ -11,9 +11,9 @@ namespace Trajectory_Planner_Augmentus
 
     public class PathPlanner
     {
-        private Path m_path = new Path();
-        private Point m_start = new Point();
-        private Point m_end = new Point();
+        private Path m_path;
+        private Point m_start;
+        private Point m_end;
         private AbstractAdapter m_plannerAdapter;
         private AvailabilityChecker m_availabilityChecker = new AvailabilityChecker();
 
@@ -40,6 +40,7 @@ namespace Trajectory_Planner_Augmentus
         {
             // Run the planner algorithm, e.g., RRT
             // m_path = m_plannerAdapter.Plan(m_start.convertToArray(), m_end.convertToArray());
+            m_path.points = new List<Point>{m_start, m_end}; 
         }
 
         public Path GetResult()

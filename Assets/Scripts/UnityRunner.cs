@@ -1,23 +1,35 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Trajectory_Planner_Augmentus
 {
     public class UnityRunner : MonoBehaviour
     {
-        private PathPlanner path_planner = new PathPlanner();
-        private TrajectoryParameterizer trajectory_parameterizer = new TrajectoryParameterizer();
+        private PathPlanner m_pathPlanner = new PathPlanner();
+        private TrajectoryOptimizer m_trajectoryOptimizer = new TrajectoryOptimizer();
         private Path m_path;
         private Trajectory m_traj;
         [SerializeField] Rigidbody m_object;
         private int m_step = 0;
 
+        public Point m_start;
+        public Point m_end;
+
+
         // Called once when the script starts
         void Start()
         {
             Debug.Log("Start the UnityRunner");
-            // 1. Run path planner
+            // 0. Get start and end, use default otherwise
+            m_start.dims = new List<double>{0, 0, 0};
+            m_end.dims = new List<double>{1, 1, 1};
 
-            // 2. Run time parameterization
+            // 1. Run path planner
+            m_pathPlanner.AddStartEndPoints(m_start, m_end);
+            m_pathPlanner.Process();
+            m_path = m_pathPlanner.GetResult();
+
+            // 2. Run trajectory optimizer
         }
 
         // Called every frame
