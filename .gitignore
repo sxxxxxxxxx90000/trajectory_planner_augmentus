@@ -9,3 +9,4 @@ Assets/Scripts/*.meta
 Assets/Tests/*.meta
 Assets/Tests/EditMode/*.meta
 Assets/Tests/PlayMode/*.meta
+Assets/_*

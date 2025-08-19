@@ -22,7 +22,7 @@ namespace Trajectory_Planner_Augmentus
             Debug.Log("Start the UnityRunner");
             // 0. Get start and end, use default otherwise
             m_start.dims = new List<double>{0, 0, 0};
-            m_end.dims = new List<double>{1, 1, 1};
+            m_end.dims = new List<double>{10, 10, 10};
 
             // 1. Run path planner
             m_pathPlanner.AddStartEndPoints(m_start, m_end);
@@ -30,24 +30,34 @@ namespace Trajectory_Planner_Augmentus
             m_path = m_pathPlanner.GetResult();
 
             // 2. Run trajectory optimizer
+            m_trajectoryOptimizer.SetSampleInterval(DEFAULT_SAMPLE_INTERVAL);
+            m_trajectoryOptimizer.SetDesiredSpeed(DEFAULT_DESIRED_SPEED);
+            m_trajectoryOptimizer.SetPath(m_path);
+            m_trajectoryOptimizer.Process();
+            m_traj = m_trajectoryOptimizer.GetResult();
         }
 
         // Called every frame
         void FixedUpdate()
         {
-            if (m_object == null || m_traj == null || m_traj.Count == 0 || m_step == m_traj.Count) return;
+            if (m_object == null || m_traj == null || m_traj.count == 0 || m_step == m_traj.count) return;
 
             // Update the frame
-            m_object.linearVelocity = convertPointToVec3D(m_traj.velocities[m_step]);
-            m_object.MovePosition(convertPointToVec3D(m_traj.positions[m_step]));
+            m_object.linearVelocity = convertPointToVec3D(m_traj.trajectory_points[m_step].Vel);
+            m_object.MovePosition(convertPointToVec3D(m_traj.trajectory_points[m_step].Pos));
             m_step++;
         }
 
         // For demo purpose only, assume our trajectory is in 3D Cartesian-space
-        public Vector3 convertPointToVec3D(Point point)
+        public Vector3 convertPointToVec3D(double[] point)
         {
-            return new Vector3((float)point.dims[0], (float)point.dims[1], (float)point.dims[2]);
+            return new Vector3((float)point[0], (float)point[1], (float)point[2]);
         }
+
+
+        // Default params for 
+        double DEFAULT_SAMPLE_INTERVAL = 0.01;
+        double DEFAULT_DESIRED_SPEED = 1;
     }
 
 

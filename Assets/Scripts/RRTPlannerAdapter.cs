@@ -6,7 +6,7 @@ namespace Trajectory_Planner_Augmentus
 {
 
 
-public class RRTAdapter : AbstractAdapter
+public class RRTPlannerAdapter : AbstractPlannerAdapter
 {
     public class Node
     {
@@ -39,7 +39,7 @@ public class RRTAdapter : AbstractAdapter
     private readonly List<Node> m_nodes = new();
 
     // Constructor
-    public RRTAdapter(
+    public RRTPlannerAdapter(
         Func<double[], bool> isFree,
         Func<double[], double[], bool> isSegmentFreeOpt = null)
     {

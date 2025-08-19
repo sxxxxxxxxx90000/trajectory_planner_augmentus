@@ -1,14 +1,36 @@
-
+using System;
+using System.Collections.Generic;
 
 namespace Trajectory_Planner_Augmentus
 {
+    public enum OptimizerType
+    {
+        Trapezoidal
+    }
+
     public class TrajectoryOptimizer
     {
         private Path m_path;
         private Trajectory m_trajectory;
-        public float m_sample_interval;
+        private double m_sample_interval;
+        private double m_desiredSpeed;
+        private double m_maxAcc = 0.1;
+        private AbstractOptimizerAdapter m_optimizerAdapter;
 
-        public void SetSampleInterval(float sample_interval)
+        public TrajectoryOptimizer(OptimizerType type = OptimizerType.Trapezoidal)
+        {
+            // We only have Trapezoidal optimizer, it can be extended to other types of optimizers
+            if (type == OptimizerType.Trapezoidal)
+            {
+                // m_optimizerAdapter = new TrapezoidalOptimizerAdapter();
+            }
+            else
+            {
+                throw new ArgumentException("Not a recognized optimizer type");
+            }
+        }
+
+        public void SetSampleInterval(double sample_interval)
         {
             m_sample_interval = sample_interval;
         }
@@ -18,9 +40,19 @@ namespace Trajectory_Planner_Augmentus
             m_path = path;
         }
 
-        public void Process() {}
+        public void SetDesiredSpeed(double desiredSpeed)
+        {
+            m_desiredSpeed = desiredSpeed;
+        }
 
-        public Trajectory getResult()
+        public void Process() 
+        {
+            // Run the optimizer algorithm, e.g., Trapezoidal
+            var outputTraj = m_optimizerAdapter.Plan(m_path.convertToListArray(), m_sample_interval, m_desiredSpeed, m_maxAcc);
+            m_trajectory = new Trajectory(outputTraj, m_sample_interval);
+        }
+
+        public Trajectory GetResult()
         {
             return m_trajectory;
         }

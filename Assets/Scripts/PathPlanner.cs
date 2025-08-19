@@ -14,7 +14,7 @@ namespace Trajectory_Planner_Augmentus
         private Path m_path;
         private Point m_start;
         private Point m_end;
-        private AbstractAdapter m_plannerAdapter;
+        private AbstractPlannerAdapter m_plannerAdapter;
         private AvailabilityChecker m_availabilityChecker = new AvailabilityChecker();
 
         public PathPlanner(PlannerType type = PlannerType.RRT)
@@ -22,7 +22,7 @@ namespace Trajectory_Planner_Augmentus
             // We only have RRT planner, it can be extended to other types of planners
             if (type == PlannerType.RRT)
             {
-                m_plannerAdapter = new RRTAdapter(m_availabilityChecker.IsAvailable);
+                m_plannerAdapter = new RRTPlannerAdapter(m_availabilityChecker.IsAvailable);
             }
             else
             {

@@ -42,15 +42,58 @@ namespace Trajectory_Planner_Augmentus
                 points.Add(new Point(pt));
             }
         }
+
+        public List<double[]> convertToListArray()
+        {
+            List<double[]> listArray = new List<double[]>();
+            foreach (Point pt in points)
+            {
+                listArray.Add(pt.convertToArray());
+            }
+            return listArray;
+        }
+    }
+
+    public class TrajectoryPoint
+    {
+        public double Time;
+        public double[] Pos;
+        public double[] Vel;
+
+        public TrajectoryPoint(double time, double[] pos, double[] vel)
+        {
+            Time = time;
+            Pos = pos;
+            Vel = vel;
+        }
+
+        public TrajectoryPoint(TrajectoryPoint pt)
+        {
+            Time = pt.Time;
+            Pos = pt.Pos;
+            Vel = pt.Vel;
+        }
     }
 
     public class Trajectory
     {
-        public List<Point> positions;
-        public List<Point> velocities;
-        public List<Point> accelerations;
-        public int Count = 0;
+        public List<TrajectoryPoint> trajectory_points;
+        public int count = 0;
         public double time_interval = 1;
+
+        public Trajectory(List<TrajectoryPoint> points, double t)
+        {
+            trajectory_points = points;
+            count = points.Count;
+            time_interval = t;
+        }
+
+        public Trajectory(Trajectory tj)
+        {
+            trajectory_points = new List<TrajectoryPoint>(tj.trajectory_points);
+            count = tj.count;
+            time_interval = tj.time_interval;
+        }
     }
 
 } // namespace Trajectory_Planner_Augmentus
