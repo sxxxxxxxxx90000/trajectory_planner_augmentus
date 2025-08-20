@@ -22,7 +22,7 @@ namespace Trajectory_Planner_Augmentus
             // We only have Trapezoidal optimizer, it can be extended to other types of optimizers
             if (type == OptimizerType.Trapezoidal)
             {
-                // m_optimizerAdapter = new TrapezoidalOptimizerAdapter();
+                m_optimizerAdapter = new TrapezoidalOptimizerAdapter();
             }
             else
             {
