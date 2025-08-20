@@ -14,7 +14,7 @@ namespace Trajectory_Planner_Augmentus
         private Trajectory m_trajectory;
         private double m_sample_interval;
         private double m_desiredSpeed;
-        private double m_maxAcc = 0.1;
+        private double m_maxAcc = 1;
         private AbstractOptimizerAdapter m_optimizerAdapter;
 
         public TrajectoryOptimizer(OptimizerType type = OptimizerType.Trapezoidal)

@@ -14,6 +14,8 @@ namespace Trajectory_Planner_Augmentus
 
         public Point(double[] pt)
         {
+            dims = new List<double>();
+
             foreach (double dim_v in pt)
             {
                 dims.Add(dim_v);
@@ -37,6 +39,8 @@ namespace Trajectory_Planner_Augmentus
 
         public Path(List<double[]> pts)
         {
+            points = new List<Point>();
+            
             foreach (double[] pt in pts)
             {
                 points.Add(new Point(pt));
