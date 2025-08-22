@@ -102,7 +102,6 @@ namespace Trajectory_Planner_Augmentus
             // Update the frame
             m_object.linearVelocity = convertPointToVec3D(m_traj.trajectory_points[m_step].Vel);
             m_object.MovePosition(convertPointToVec3D(m_traj.trajectory_points[m_step].Pos));
-            // m_step++;
         }
 
         // For demo purpose only, assume our trajectory is in 3D Cartesian-space

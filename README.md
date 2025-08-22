@@ -6,7 +6,7 @@ It provides two core modules which can be used consecutively:
 - **Path Planner** — computes a geometric path between start and goal points.
 - **Trajectory Optimizer** — time-parameterizes the path into a full trajectory with velocities.
 
-Both modules are able to be used independenly and designed to be **extendable** so other algorithms can be added as well. The architecture is represented in image.
+Both modules are able to be used independenly and designed to be **extendable** so other algorithms can be added as well. The architecture is represented in Diagram.md.
 
 ---
 
