@@ -1,5 +1,6 @@
 ## UML Class Diagram
 
+
 ```text
 +---------------------------+           +------------------------------+
 |        PathPlanner        | uses ---> |     AbstractPlannerAdapter   |
