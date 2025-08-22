@@ -15,6 +15,7 @@ namespace Trajectory_Planner_Augmentus
         private double m_sample_interval;
         private double m_desiredSpeed;
         private double m_maxAcc = 1;
+        private double m_maxDec = 1;
         private AbstractOptimizerAdapter m_optimizerAdapter;
 
         public TrajectoryOptimizer(OptimizerType type = OptimizerType.Trapezoidal)
@@ -45,10 +46,16 @@ namespace Trajectory_Planner_Augmentus
             m_desiredSpeed = desiredSpeed;
         }
 
+        public void SetAccelerationAndDeceleration(double acc, double dec)
+        {
+            m_maxAcc = acc;
+            m_maxDec = dec;
+        }
+
         public void Process() 
         {
             // Run the optimizer algorithm, e.g., Trapezoidal
-            var outputTraj = m_optimizerAdapter.Plan(m_path.convertToListArray(), m_sample_interval, m_desiredSpeed, m_maxAcc);
+            var outputTraj = m_optimizerAdapter.Plan(m_path.convertToListArray(), m_sample_interval, m_desiredSpeed, m_maxAcc, m_maxDec);
             m_trajectory = new Trajectory(outputTraj, m_sample_interval);
         }
 

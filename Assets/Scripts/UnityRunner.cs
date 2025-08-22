@@ -21,10 +21,14 @@ namespace Trajectory_Planner_Augmentus
         private Point m_end;
         private double m_sampleInterval = -1;
         private double m_desiredSpeed = -1;
+        private double m_maxAcc = -1;
+        private double m_maxDec = -1;
 
         // Default params for 
-        double DEFAULT_SAMPLE_INTERVAL = 0.01;
-        double DEFAULT_DESIRED_SPEED = 1;
+        public double DEFAULT_SAMPLE_INTERVAL = 0.01;
+        public double DEFAULT_DESIRED_SPEED = 1;
+        public double DEFAULT_MAX_ACC = 1;
+        public double DEFAULT_MAX_DEC = 1; 
 
         void Awake() { 
             m_object = GetComponent<Rigidbody>(); 
@@ -37,7 +41,7 @@ namespace Trajectory_Planner_Augmentus
         {
             Debug.Log("Start the UnityRunner");
             
-            // 0. Get start, end, sample interval, and desired speed, use default otherwise
+            // 0. Get start, end, sample interval, desired speed, and acceleration/deceleration, use default otherwise
             if (m_start == null)
             {
                 double[] start_pos = {0, 0, 0};
@@ -56,6 +60,14 @@ namespace Trajectory_Planner_Augmentus
             {
                 m_desiredSpeed = DEFAULT_DESIRED_SPEED;
             }
+            if (m_maxAcc == -1)
+            {
+                m_maxAcc = DEFAULT_MAX_ACC;
+            }
+            if (m_maxDec == -1)
+            {
+                m_maxDec = DEFAULT_MAX_DEC;
+            }
 
             // 1. Run path planner
             Debug.Log("Path Planner is started");
@@ -68,6 +80,7 @@ namespace Trajectory_Planner_Augmentus
             Debug.Log("Trajectory Optimizer is started");
             m_trajectoryOptimizer.SetSampleInterval(m_sampleInterval);
             m_trajectoryOptimizer.SetDesiredSpeed(m_desiredSpeed);
+            m_trajectoryOptimizer.SetAccelerationAndDeceleration(m_maxAcc, m_maxDec);
             m_trajectoryOptimizer.SetPath(m_path);
             m_trajectoryOptimizer.Process();
             m_traj = m_trajectoryOptimizer.GetResult();
@@ -98,6 +111,7 @@ namespace Trajectory_Planner_Augmentus
             return new Vector3((float)point[0], (float)point[1], (float)point[2]);
         }
 
+        // APIs for users setting the inputs for the planner
         public void SetStartEndPosition(double[] start, double[] end)
         {
             m_start = new Point(start);
@@ -112,6 +126,12 @@ namespace Trajectory_Planner_Augmentus
         public void SetDesiredSpeed(double desiredSpeed)
         {
             m_desiredSpeed = desiredSpeed;
+        }
+
+        public void SetAccelerationAndDeceleration(double acc, double dec)
+        {
+            m_maxAcc = acc;
+            m_maxDec = dec;
         }
     }
 
